@@ -12,28 +12,15 @@ class App extends React.Component {
     }
 
     renderUsersList() {
-        const { users, searchQuery } = this.state;
-        if (!searchQuery.trimEnd()) {
-            return users.map(name => {
-                return (
-                    <li onClick={this.clickHandler}>
-                        {name}
-                    </li>
-                );
-            });
-        }
-        const filteredUsers = users.filter(user =>
-            user.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-
-        return filteredUsers.map(name => (
-            <li onClick={this.clickHandler}>
-                {name}
-            </li>
-        ));
+        const { users } = this.state;
+        return users.map(name => {
+            return (
+                <li onClick={this.clickHandler}>
+                    {name}
+                </li>
+            );
+        });
     }
-
-
 
     clickHandler = e => {
         const { innerText: userName } = e.target;
@@ -46,17 +33,11 @@ class App extends React.Component {
             [name]: value,
         });
     }
-    searchQueryChange = e => {
-        const { value } = e.target;
-        this.setState({ searchQuery: value, });
-
-    }
 
     render() {
-        const { firstName, lastName, searchQuery } = this.state;
+        const { firstName, lastName } = this.state;
         return (
             <section onSubmit={this.submitHandler}>
-                <input name='searchQuery' value={searchQuery} onChange={this.searchQueryChange} placeholder="Find user..." />
                 <form>
                     <input name="firstName"
                         value={firstName}
@@ -68,7 +49,6 @@ class App extends React.Component {
                     />
                     <input type="submit" />
                 </form>
-
                 <ul>{this.renderUsersList()}</ul>
             </section>
         );
